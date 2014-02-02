@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="UTF8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>OTP napi chart</title>
+
+        <link href="assets/ui/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="assets/prettify/prettify.css" rel="stylesheet" type="text/css" />
+        <!--script type="text/javascript" src="Charts/jquery.min.js"></script-->
+        <script language="JavaScript" src="Charts/FusionCharts.js"></script>
+        <!--script type="text/javascript" src="assets/ui/js/json2.js"></script-->
+
+        <!--script type="text/javascript" src="assets/prettify/prettify.js"></script>
+        <script type="text/javascript" src="assets/ui/js/lib.js"></script-->
+
+        <style type="text/css">
+            body { background:none !important }
+        </style>
+
+    </head>
+    <body>
+        <!-- heading -->
+        <h3 class="chart-title">OTP chart</h3>
+		<p>&nbsp;</p>
+		<!--script type="text/javascript" src="Data/js/Tozsde1.js" ></script-->
+        <div id="chartdiv" align="center">
+            <!--Ezt a tagot hagy meg, ebbe lesz betöltve a chart!-->
+            -- Chart helye --
+        </div>
+
+        <script type="text/javascript">
+            var chart = new FusionCharts("charts/CandleStick.swf", "ChartId", "1000", "580", "0");
+            //chart.setXMLData( dataString );
+            chart.setXMLUrl("Data/datas.xml");
+            chart.render("chartdiv");
+        </script>
+        
+        <p align="center" class="chartdesc">
+            - 
+        </p>
+
+        <!-- action buttons -->
+        <!--div class="qua-button-holder">
+            <a class="qua qua-button view-chart-data" href="javascript:void(0)"><span>View XML</span></a>
+            <a class="qua qua-button view-chart-data" href="javascript:void(0)"><span>View JSON</span></a>
+        </div-->
+
+        <!-- data viewer -->
+        <div class="show-code-block">
+            <span id="titlebar">XML</span>
+            <div class="show-code-close-icon"><a href="javascript:void(0)"><img src="assets/ui/images/close.gif" /></a></div>
+            <div class="clear"></div>
+            <pre class="prettyprint"></pre>
+            <div class="show-code-close-btn"><a class="qua qua-button" href="javascript:void(0)"><span>Close</span></a></div>
+        </div>
+        <script type="text/javascript">
+            // Check for the various File API support.
+            if (window.File && window.FileReader && window.FileList && window.Blob) {
+              // Great success! All the File APIs are supported.
+            } else {
+              alert('The File APIs are not fully supported in this browser.');
+            }
+        </script>
+
+    </body>
+</html>
