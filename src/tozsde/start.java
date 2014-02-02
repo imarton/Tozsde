@@ -25,10 +25,11 @@ import java.util.logging.Logger;
 public class start {
     public static void main(String[] args) {
         try {
-            //teszt
-            ChartDataManager cman = new ChartDataManager(parseFile(new File("F:\\munka\\PowerCharts_XT_Eval\\Tozsde\\data\\nyers\\20140131.txt")));
+            //teszt            
             
-            FileOutputStream fos = new FileOutputStream("F:\\munka\\PowerCharts_XT_Eval\\Tozsde\\data\\Tozsde1.xml");
+            ChartDataManager cman = new ChartDataManager(parseFile(new File("./src/charts/data/nyers/20140129.txt")));
+            
+            FileOutputStream fos = new FileOutputStream("./src/charts/data/datas.xml");
             OutputStreamWriter osw = null;
             try {
                 osw = new OutputStreamWriter(fos, "UTF-8");
@@ -156,7 +157,7 @@ class ChartDataManager{
      * Candle period time in second
      * default: 1 minute;
      */
-    private int periodTime = 1*60; 
+    private int periodTime = 5*60; 
     
 
     // chart grafikus jellemzői
@@ -166,14 +167,14 @@ class ChartDataManager{
     private String bearFillColor = "E33C3C";
     private String bullBorderColor = "1F3165";
     private byte volumeHeightPercent = 20;
-    private String caption = "2014.01.20";
+    private String caption = "-";
     private String PYAxisName = "Árfolyam";
     private String VYAxisName = "Mennyiség";
     
     public ChartDataManager(ArrayList<Trans> datas) {
         
         try {
-            this.startTime = (new SimpleDateFormat("yyyy.MM.dd HH:mm")).parse("2014.01.31 09:00");
+            this.startTime = (new SimpleDateFormat("yyyy.MM.dd HH:mm")).parse("2014.01.21 09:00");
         } catch (ParseException ex) {
             Logger.getLogger(ChartDataManager.class.getName()).log(Level.SEVERE, null, ex);
             this.startTime = new Date();
@@ -187,15 +188,6 @@ class ChartDataManager{
    
     public Chart createChart(){
         Chart chart = new Chart();
-        chart.PYAxisName = this.PYAxisName;
-        chart.VYAxisName = this.VYAxisName;
-        chart.bearBorderColor = this.bearBorderColor;
-        chart.bearFillColor = this.bearFillColor;
-        chart.bullBorderColor = this.bullBorderColor;
-        chart.caption = this.caption;
-        chart.numPDivLines = this.numPDivLines;
-        chart.numberSuffix = this.numberSuffix;
-        chart.volumeHeightPercent = this.volumeHeightPercent;
         
         DataSet ds = new DataSet();
         chart.addChild(ds);
@@ -220,6 +212,16 @@ class ChartDataManager{
         cat.label = sf.format(chart.getEndTime());
         cat.x = chart.getNumberOfCandle();
         cats.addChild(cat);                
+        
+        chart.caption = String.format("%s - %s", sf.format(chart.getStartTime()), sf.format(chart.getEndTime()));
+        chart.PYAxisName = this.PYAxisName;
+        chart.VYAxisName = this.VYAxisName;
+        chart.bearBorderColor = this.bearBorderColor;
+        chart.bearFillColor = this.bearFillColor;
+        chart.bullBorderColor = this.bullBorderColor;        
+        chart.numPDivLines = this.numPDivLines;
+        chart.numberSuffix = this.numberSuffix;
+        chart.volumeHeightPercent = this.volumeHeightPercent;
         
         return chart;
     }
@@ -495,11 +497,17 @@ class Chart extends ChildElem{
         }
         return null;
     }
-
+    /**
+     * A Charton lévő első gyerta kezdő ideje
+     * @return 
+     */
     public Date getStartTime() {
         return this.getDataSet().getFirstCandle().getStartTime();
     }
-
+    /**
+     * A Charton lévő utolsó gyertya záróideje
+     * @return 
+     */
     public Date getEndTime() {
         return this.getDataSet().getLastCandle().getEndTime();
     }
